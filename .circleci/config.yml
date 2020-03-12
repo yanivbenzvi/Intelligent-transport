@@ -1,4 +1,4 @@
-version: 2.2
+version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
@@ -35,3 +35,5 @@ workflows:
   main:
     jobs:
       - build-and-test
+      - Unit-Test
+      - Integration-Test
