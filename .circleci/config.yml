@@ -11,17 +11,23 @@ jobs:
       - python/load-cache
       - python/install-deps
       - python/save-cache
-      - run:
-          command: python -m unittest discover 'tests/unit' 'test_*.py'
-          name: Unit Test
-      - run:
-          command: python -m unittest discover 'tests/feature' 'test_*.py'
-          name: Feature Test
-      - run:
-          command: python -m unittest discover 'tests/integration' 'test_*.py'
-          name: Integration Test
+
+  Unit-Test:
+    - run:
+    command: python -m unittest discover 'tests/unit' 'test_*.py'
+    name: Unit Test
+  Feature-Test:
+    - run:
+      command: python -m unittest discover 'tests/feature' 'test_*.py'
+      name: Feature Test
+  Integration-Test:
+    - run:
+      command: python -m unittest discover 'tests/integration' 'test_*.py'
+      name: Integration Test
 
 workflows:
   main:
     jobs:
       - build-and-test
+      - Unit-Test
+      - Integration-Test
