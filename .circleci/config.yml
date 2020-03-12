@@ -11,22 +11,12 @@ jobs:
       - python/load-cache
       - python/install-deps
       - python/save-cache
-
-  Unit-Test:
-    executor: python/default
-    steps:
       - run:
         command: python -m unittest discover 'tests/unit' 'test_*.py'
         name: Unit Test
-  Feature-Test:
-    executor: python/default
-    steps:
       - run:
         command: python -m unittest discover 'tests/feature' 'test_*.py'
         name: Feature Test
-  Integration-Test:
-    executor: python/default
-    steps:
       - run:
         command: python -m unittest discover 'tests/integration' 'test_*.py'
         name: Integration Test
@@ -35,5 +25,3 @@ workflows:
   main:
     jobs:
       - build-and-test
-      - Unit-Test
-      - Integration-Test
