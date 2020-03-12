@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.2
 
 orbs:
   python: circleci/python@0.2.1
@@ -13,17 +13,23 @@ jobs:
       - python/save-cache
 
   Unit-Test:
-    - run:
-      command: python -m unittest discover 'tests/unit' 'test_*.py'
-      name: Unit Test
+    executor: python/default
+    steps:
+      - run:
+        command: python -m unittest discover 'tests/unit' 'test_*.py'
+        name: Unit Test
   Feature-Test:
-    - run:
-      command: python -m unittest discover 'tests/feature' 'test_*.py'
-      name: Feature Test
+    executor: python/default
+    steps:
+      - run:
+        command: python -m unittest discover 'tests/feature' 'test_*.py'
+        name: Feature Test
   Integration-Test:
-    - run:
-      command: python -m unittest discover 'tests/integration' 'test_*.py'
-      name: Integration Test
+    executor: python/default
+    steps:
+      - run:
+        command: python -m unittest discover 'tests/integration' 'test_*.py'
+        name: Integration Test
 
 workflows:
   main:
