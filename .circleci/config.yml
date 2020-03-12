@@ -35,5 +35,3 @@ workflows:
   main:
     jobs:
       - build-and-test
-      - Unit-Test
-      - Integration-Test
