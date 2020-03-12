@@ -14,8 +14,8 @@ jobs:
 
   Unit-Test:
     - run:
-    command: python -m unittest discover 'tests/unit' 'test_*.py'
-    name: Unit Test
+      command: python -m unittest discover 'tests/unit' 'test_*.py'
+      name: Unit Test
   Feature-Test:
     - run:
       command: python -m unittest discover 'tests/feature' 'test_*.py'
