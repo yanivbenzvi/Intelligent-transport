@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs:
+  python: circleci/python@0.2.1
+
+jobs:
+  build-and-test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+      - run:
+          command: python -m unittest discover 'tests/unit' 'test_*.py'
+          name: Unit Test
+      - run:
+          command: python -m unittest discover 'tests/feature' 'test_*.py'
+          name: Feature Test
+      - run:
+          command: python -m unittest discover 'tests/integration' 'test_*.py'
+          name: Integration Test
+
+workflows:
+  main:
+    jobs:
+      - build-and-test
