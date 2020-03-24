@@ -13,7 +13,7 @@ system requirements:
 
 Clone this repository by the following command:
 ```
-git clone git@github.com:yanivbenzvi/numerical-analysis1.git
+git clone git@github.com:yanivbenzvi/smart-transport.git
 ```
 
 install all project dependencies by the following command:
