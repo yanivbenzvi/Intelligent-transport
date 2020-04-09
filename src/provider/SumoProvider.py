@@ -20,9 +20,12 @@ class SumoProvider:
 
         traci.start(Configuration.sumoCmd)
 
+        traci.lane.subscribe("152810#2_1", (tc.VAR_LENGTH, tc.VAR_WIDTH,tc.VAR_WAITING_TIME))
+        traci.lane.subscribe("-152330#1_1", (tc.VAR_LENGTH, tc.VAR_WIDTH,tc.VAR_WAITING_TIME))
+        #traci.lane.subscribeLeader(vehID="EXT", dist=0)
         for step in range(self.number_of_iteration):
-            print(traci.lane.subscribe("152810#2_1",(tc.va), begin=0.0, end=9999999999.9))
             traci.simulationStep()
+            print(traci.lane.getAllSubscriptionResults())
             time.sleep(self.simulator_delay)
             # print(step)
 
