@@ -8,4 +8,4 @@ def get_project_home_path():
     while script_dir[1] != Configuration.project_folder_name:
         script_dir = os.path.split(script_dir[0])
 
-    return script_dir[0] + "/" + Configuration.project_folder_name
+    return script_dir[0] + "\\" + Configuration.project_folder_name

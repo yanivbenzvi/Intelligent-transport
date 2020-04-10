@@ -1,16 +1,17 @@
 import urllib.request
 import os
+from src import Configuration
 
 
 class DownloadFile:
     @staticmethod
     def download_file(url, path):
-        print('Beginning file download with urllib2...\n')
-        project_path = os.path.dirname(os.path.abspath(__file__))
-        downloaded_path = project_path + path
-        print(downloaded_path)
-        urllib.request.urlretrieve(url, downloaded_path)
+        urllib.request.urlretrieve(url, path)
+
+    def download_zip(url, path,  ):
 
 
 if __name__ == "__main__":
-    DownloadFile.download_file("http://i3.ytimg.com/vi/J---aiyznGQ/mqdefault.jpg", "\scinario")
+    DownloadFile.download_file(
+        "https://images.unsplash.com/reserve/Af0sF2OS5S5gatqrKzVP_Silhoutte.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+        Configuration.project_path + "\simulator\scinario.jpg")
