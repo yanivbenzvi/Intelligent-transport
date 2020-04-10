@@ -18,10 +18,7 @@ class ParseXml:
         return self
 
     def get_elements(self, element_name):
-        list = []
-        for neighbor in self.tree.iter(element_name):
-            list += [neighbor.attrib]
-        return list
+        return list(map(lambda neighbor: neighbor.attrib, self.tree.iter(element_name)))
 
 
 if __name__ == "__main__":
