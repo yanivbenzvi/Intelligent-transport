@@ -1,4 +1,4 @@
-from src import Configuration
+from src import Providers
 
 
 class Application:
@@ -7,6 +7,6 @@ class Application:
 
     def startup(self):
         print("starting application")
-        providers = list(map(lambda provider: provider(), Configuration.app_providers))
+        providers = list(map(lambda provider: provider(), Providers.app_providers))
         providers = list(map(lambda provider: provider.boot(), providers))
         self.start = True
