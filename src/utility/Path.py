@@ -9,3 +9,7 @@ def get_project_home_path():
         script_dir = os.path.split(script_dir[0])
 
     return script_dir[0] + "\\" + Configuration.project_folder_name
+
+
+def folder_exist(path):
+    return os.path.exists(path)

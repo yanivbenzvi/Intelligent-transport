@@ -78,7 +78,8 @@ class DownloadFile:
             print("starting unpack file\n")
             project_path = Configuration.project_path + "\\" + folder_path
             if ext == ".zip":
-                with zipfile.ZipFile(project_path + "\\" + file_name, 'r') as zip_ref:
+                print("result:", result['download_path'])
+                with zipfile.ZipFile(result['download_path'], 'r') as zip_ref:
                     zip_ref.extractall(project_path)
             elif ext == ".gz":
                 tar = tarfile.open(result['download_path'])
@@ -89,16 +90,22 @@ class DownloadFile:
                 tar.close()
         if delete_after_unpack:
             DownloadFile.remove_file(result['download_path'])
+        return project_path
 
 
 if __name__ == "__main__":
-    file_url = "https://images.unsplash.com/reserve/Af0sF2OS5S5gatqrKzVP_Silhoutte.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-    DownloadFile.download_file(file_url, "simulator", "scenario.jpg")
-    DownloadFile.download_file(file_url, "simulator")
-    DownloadFile.download_file(file_url, "simulator", "demo_download")
+    # file_url = "https://images.unsplash.com/reserve/Af0sF2OS5S5gatqrKzVP_Silhoutte.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+    # DownloadFile.download_file(file_url, "simulator", "scenario.jpg")
+    # DownloadFile.download_file(file_url, "simulator")
+    # DownloadFile.download_file(file_url, "simulator", "demo_download")
+    #
+    # file_url = "http://academic.lucabedogni.it/wp-content/uploads/2019/11/bolognaringway_1.0.tar.gz"
+    # DownloadFile.download_zip(file_url, "simulator", unpack=True)
+    #
+    # file_url = "https://github.com/lcodeca/MoSTScenario/archive/v0.6.tar.gz"
+    # DownloadFile.download_zip(file_url, "simulator", unpack=True)
 
-    file_url = "http://academic.lucabedogni.it/wp-content/uploads/2019/11/bolognaringway_1.0.tar.gz"
+    file_url = "https://github.com/lcodeca/MoSTScenario/archive/v0.6.zip"
     DownloadFile.download_zip(file_url, "simulator", unpack=True)
 
-    file_url = "https://github.com/lcodeca/MoSTScenario/archive/v0.6.tar.gz"
-    DownloadFile.download_zip(file_url, "simulator", unpack=True)
+
