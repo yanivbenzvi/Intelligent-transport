@@ -20,7 +20,8 @@ class Scenario:
         if not Path.folder_exist(scenario_folder):
             print("scenario files not exist, starting download...")
 
-            if DownloadFile.get_extension_from_url(self.download_url) in ["zip", ".zip", "gz", ".gz", ".tar"]:
+            if DownloadFile.get_extension_from_url(self.download_url) in ["zip", ".zip", ".7z", "7z", "gz", ".gz",
+                                                                          ".tar"]:
                 return DownloadFile.download_zip(self.download_url, "simulator", unpack=True)
             else:
                 return DownloadFile.download_file(self.download_url, Scenario.ScenarioLocation)
@@ -30,3 +31,6 @@ class Scenario:
     def path_to_scenario_conf(self):
         return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
                "\\" + self.conf_path + "\\" + self.conf_file_name
+
+    def search_for_xml(self):
+        pass

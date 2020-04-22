@@ -1,6 +1,6 @@
 class Lane:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, lane_id, index, allow, speed, length=None, width=None, shape=None):
+    def __init__(self, lane_id, index, speed, allow=None, disallow=None, length=None, width=None, shape=None):
         """
         :param lane_id: unique name - String example - "131316_w0"
         :param index:   number of road lanes start at 0 - String example "0"
@@ -13,6 +13,7 @@ class Lane:
         self.lane_id = lane_id
         self.index = index
         self.allow = allow
+        self.disallow = disallow
         self.speed = speed
         self.length = length
         self.width = width

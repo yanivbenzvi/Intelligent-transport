@@ -77,7 +77,7 @@ class DownloadFile:
         if unpack:
             print("starting unpack file\n")
             project_path = Configuration.project_path + "\\" + folder_path
-            if ext == ".zip":
+            if ext in (".zip", ".7z"):
                 print("result:", result['download_path'])
                 with zipfile.ZipFile(result['download_path'], 'r') as zip_ref:
                     zip_ref.extractall(project_path)
@@ -107,5 +107,3 @@ if __name__ == "__main__":
 
     file_url = "https://github.com/lcodeca/MoSTScenario/archive/v0.6.zip"
     DownloadFile.download_zip(file_url, "simulator", unpack=True)
-
-
