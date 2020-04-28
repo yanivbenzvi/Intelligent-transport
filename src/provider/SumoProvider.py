@@ -5,6 +5,7 @@ from collections import deque
 import traci
 import time
 import traci.constants as tc
+
 from src import Configuration
 from src.modules.Scenario import Scenario
 
@@ -22,15 +23,24 @@ class SumoProvider:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
         SumoProvider.prefer_simulation()
-        print(Configuration.sumoCmd())
         traci.start(Configuration.sumoCmd())
 
-        # traci.lane.subscribe("152810#2_1", (tc.VAR_LENGTH, tc.VAR_WIDTH,tc.VAR_WAITING_TIME))
-        # traci.lane.subscribe("-152330#1_1", (tc.VAR_LENGTH, tc.VAR_WIDTH,tc.VAR_WAITING_TIME))
+        # create all instance
+
+        # make subscribe to all instance
+        # traci.lane.subscribe("152810#2_1")
+        # traci.vehicle.subscribe("pedestrian_1-3_2239_tr")
+
         # traci.lane.subscribeLeader(vehID="EXT", dist=0)
         for step in range(self.number_of_iteration):
-            traci.simulationStep()
-            # print(traci.lane.getAllSubscriptionResults())
+            try:
+                traci.simulationStep()
+            except traci.exceptions.FatalTraCIError as inst:
+                print(inst)
+                break
+            print(traci.lane.getAllSubscriptionResults())
+            print(traci.vehicle.getAllSubscriptionResults())
+            # update instance by subscribe result
             time.sleep(self.simulator_delay)
             # print(step)
 
@@ -45,26 +55,15 @@ class SumoProvider:
 
     @staticmethod
     def select_simulation():
-        scenario_list = [
-            Scenario(name="Monacor Scenario ver 06",
-                     download_url="https://github.com/lcodeca/MoSTScenario/archive/v0.6.zip",
-                     dest_folder="MoSTScenario-0.6", conf_path="scenario", conf_file_name="most.sumocfg"),
-            Scenario(name="Bologna small ver 0.29",
-                     download_url="https://liquidtelecom.dl.sourceforge.net/project/sumo/traffic_data/scenarios/Bologna_small/Bologna_small-0.29.0.zip",
-                     dest_folder="Bologna_small-0.29.0", conf_path="acosta", conf_file_name="run.sumo.cfg"),
-            Scenario(name="Luxembourg ver 2.0", download_url="https://github.com/lcodeca/LuSTScenario/archive/v2.0.zip",
-                     dest_folder="LuSTScenario-2.0", conf_path="scenario", conf_file_name="dua.actuated.sumocfg"),
-            Scenario(name="Cologne Germany ver 0.32", download_url="https://liquidtelecom.dl.sourceforge.net/project/sumo/traffic_data/scenarios/TAPASCologne/TAPASCologne-0.32.0.7z",
-                     dest_folder="TAPASCologne-0.32.0", conf_path="", conf_file_name="cologne.sumocfg")
-        ]
+
         if not Configuration.production:
-            SumoProvider.print_scenario_menu(scenario_list)
+            SumoProvider.print_scenario_menu(Configuration.scenario_list)
             while True:
                 selected_choice_num = int(input("enter your choice: "))
-                if selected_choice_num - 1 in range(0, len(scenario_list)):
+                if selected_choice_num - 1 in range(0, len(Configuration.scenario_list)):
                     break
-            return scenario_list[selected_choice_num - 1]
-        return scenario_list[0]
+            return Configuration.scenario_list[selected_choice_num - 1]
+        return Configuration.scenario_list[0]
 
     @staticmethod
     def print_scenario_menu(scenario_list):

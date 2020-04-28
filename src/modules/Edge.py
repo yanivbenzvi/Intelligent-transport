@@ -1,6 +1,6 @@
 class Edge:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, edge_id, edge_from, edge_to, lane_id, priority=None, edge_type=None, shape=None):
+    def __init__(self, edge_id, edge_from=None, edge_to=None, lane_id=None, priority=None, edge_type=None, shape=None):
         """
         :param edge_id:   unique name - String example - "153459#0"
         :param edge_from: unique from edge - String example - "141010"

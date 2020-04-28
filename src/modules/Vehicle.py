@@ -1,6 +1,6 @@
 class Vehicle:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, v_id, v_type, depart, departLane, arrivalPos, edges):
+    def __init__(self, v_id, v_type, depart, departLane, arrivalPos, edges=None):
         """
         :param v_id:       Unique name - String example - "pedestrian_3-1_3451_tr"
         :param v_type:     Vehicle type - String example - "passenger"
