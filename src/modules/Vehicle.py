@@ -1,3 +1,6 @@
+import traci.constants as tc
+
+
 class Vehicle:
     # from \\scenario\\in\\most.net.xml
     def __init__(self, v_id, v_type, depart, departLane, arrivalPos, edges):
@@ -15,3 +18,7 @@ class Vehicle:
         self.departLane = departLane
         self.arrivalPos = arrivalPos
         self.edges = edges
+
+    @staticmethod
+    def subscribe_args_list():
+        return tc.VAR_WAITING_TIME, tc.VAR_SPEED

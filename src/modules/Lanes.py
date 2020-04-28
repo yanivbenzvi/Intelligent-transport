@@ -1,3 +1,5 @@
+import traci.constants as tc
+
 class Lane:
     # from \\scenario\\in\\most.net.xml
     def __init__(self, lane_id, index, allow, speed, length=None, width=None, shape=None):
@@ -17,3 +19,8 @@ class Lane:
         self.length = length
         self.width = width
         self.shape = shape
+
+
+@staticmethod
+def subscribe_args_list():
+    return tc.
