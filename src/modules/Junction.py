@@ -1,3 +1,8 @@
+import traci.constants as tc
+from traci._lane import _readLinks
+from traci.domain import Domain
+from traci.storage import Storage
+
 class Junction:
 
     # from \\scenario\\in\\most.net.xml
@@ -18,3 +23,9 @@ class Junction:
         self.x = x
         self.y = y
         self.z = z
+
+def getPosition(self, junctionID):
+    """getPosition(string) -> (double, double)
+    Returns the coordinates of the center of the junction.
+    """
+    return self._getUniversal(tc.VAR_POSITION, junctionID)
