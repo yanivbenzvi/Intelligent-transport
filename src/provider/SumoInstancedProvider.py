@@ -37,6 +37,10 @@ class SumoInstancedProvider:
             'edge': {
                 'ctor1': Edge,
                 'ctor2': lambda arg: Edge(edge_id=arg['id'])
+            },
+            'tlLogic': {
+                'ctor1': Edge,
+                'ctor2': lambda arg: print(arg)
             }
         }
 
@@ -49,12 +53,9 @@ class SumoInstancedProvider:
 
         instance_list = {}
         for instance_ctor in instance_ctor_list.keys():
-            # if instance_ctor in ['lane', 'edge']:
             if instance_ctor is not 'vehicle':
                 instance_list[instance_ctor] = {arg['id']: instance_ctor_list[instance_ctor]['ctor2'](arg) for arg in
                                                 xml_net_file.get_elements(instance_ctor)}
-                # instance_list[instance_ctor] = list(map(lambda arg: insance_ctor_list[instance_ctor]['ctor2'](arg),
-                #                                         xml_net_file.get_elements(instance_ctor)))
             else:
                 instance_list[instance_ctor] = {arg['id']: instance_ctor_list[instance_ctor]['ctor2'](arg) for arg in
                                                 vehicle_xml_file.get_elements(instance_ctor)}
@@ -82,30 +83,6 @@ if __name__ == "__main__":
         print(instance_ctor, ": ", len(instance_list[instance_ctor]))
 
     # print(instance_list['vehicle'])
-
-    # xml_file = ParseXml("most.net.xml", project_path + "/tests/resources/").open_file()
-    # # xml_file = ParseXml(Scenario.get_xml_file, project_path + "/tests/resources/").open_file()
-    #
-    # lane_list = list(
-    #     map(lambda arg: Lane(lane_id=arg['id'], index=arg['index'], speed=arg['speed'], length=arg['length']),
-    #         xml_file.get_elements("lane")))
-    #
-    # print(len(lane_list))
-    #
-    # vehicle_xml_file = ParseXml("most.pedestrian.rou.xml",
-    #                             project_path + "/simulator/MoSTScenario-0.6/scenario/in/route/").open_file()
-    # vehicle_list = {}
-    # # vehicle_list[arg['id']] = arg['id'] for arg in vehicle_xml_file.get_elements("vehicle")
-    # # vehicle_list[x] =  x for x in range(0,100)
-    # print(vehicle_list)
-
-    # edge_list = list(map(lambda arg: Vehicle( vehicle_type, v_id, lat_alignment, person_capacity=-1, tau=1, speed_dev=-1, lc_cooperative=0.0,
-    #              key="", value="false", probability=-1, max_speed=-1, sigma=-1, gui_shape="passenger"),xml_file.get_elements("vehicle")))
-
-    # xml_file = ParseXml("most.net.xml", project_path + "/simulator/MoSTScenario-0.6/scenario/in/").open_file()
-    # lane_list = list(map(lambda arg: Lane(lane_id=arg['id'], index=arg['index'], speed=arg['speed'], length=arg['length']),xml_file.get_elements("lane")))
-    # print(len(lane_list))
-
     # instance_list = {
     #     'lane': {
     #         "152810#2_1": Lane(lane_id=arg['id'], index=arg['index'], speed=arg['speed'], length=arg['length']),
