@@ -4,6 +4,7 @@ from src.modules.Scenario import Scenario
 production = False
 sumoBinary = "sumo" if production else "sumo-gui"
 project_folder_name = "smart-transport"
+tripInfoFile = "logs\\tripinfo.trips.xml"
 project_path = Path.get_project_home_path()
 # sumoFolder = "C:\\Users\\Yaniv\\Desktop\\MoSTScenario\\scenario\\most.sumocfg"
 sumoFolder = None
@@ -35,4 +36,4 @@ scenario_list = [
 ]
 
 
-def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S"]
+def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S","--tripinfo-output", tripInfoFile]

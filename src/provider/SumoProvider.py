@@ -23,6 +23,7 @@ class SumoProvider:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
         SumoProvider.prefer_simulation()
+        # print(Configuration.sumoCmd())
         traci.start(Configuration.sumoCmd())
 
         # create all instance
