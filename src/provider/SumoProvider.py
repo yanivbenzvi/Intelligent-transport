@@ -49,10 +49,10 @@ class SumoProvider:
 
     @staticmethod
     def prefer_simulation():
-        scenario_object = SumoProvider.select_simulation()
-        scenario_object.download_scenario()
-        print(scenario_object.path_to_scenario_conf())
-        Configuration.sumoFolder = scenario_object.path_to_scenario_conf()
+        Configuration.scenario_object = SumoProvider.select_simulation()
+        Configuration.scenario_object.download_scenario()
+        print(Configuration.scenario_object.path_to_scenario_conf())
+        Configuration.sumoFolder = Configuration.scenario_object.path_to_scenario_conf()
 
     @staticmethod
     def select_simulation():

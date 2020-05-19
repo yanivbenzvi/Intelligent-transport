@@ -4,8 +4,8 @@ from src.modules.Scenario import Scenario
 production = False
 sumoBinary = "sumo" if production else "sumo-gui"
 project_folder_name = "smart-transport"
-tripInfoFile = "logs\\tripinfo.trips.xml"
 project_path = Path.get_project_home_path()
+scenario_object = None
 # sumoFolder = "C:\\Users\\Yaniv\\Desktop\\MoSTScenario\\scenario\\most.sumocfg"
 sumoFolder = None
 
@@ -36,4 +36,16 @@ scenario_list = [
 ]
 
 
-def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S","--tripinfo-output", tripInfoFile]
+def tripInfoFile():
+    if not scenario_object:
+        import sys
+        print("Error: cannot generate tripinfo path, there is no selected scenario object.")
+        sys.exit(1)
+    filename = scenario_object.name.lower().replace(" ", "_")
+    from datetime import datetime
+    date = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
+    full_path = "logs\\" + filename + "_date-" + date + "_tripinfo.trips.xml"
+    return full_path
+
+
+def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S", "--tripinfo-output", tripInfoFile()]
