@@ -23,12 +23,12 @@ class SumoProvider:
         Configuration.scenario_object.traci = traci
         traci.start(Configuration.sumoCmd())
         print(Configuration.scenario_object.scenario_duration())
-        # create all instance
+        # print(Configuration.sumoCmd())
 
         # make subscribe to all instance
         traci.lane.subscribe("152780_1", {traci.constants.LAST_STEP_OCCUPANCY})
         # traci.vehicle.subscribe("pedestrian_1-3_2239_tr")
-
+        traci.lane.subscribe("152780_1")
         # traci.lane.subscribeLeader(vehID="EXT", dist=0)
         for step in range(self.number_of_iteration):
             try:
@@ -36,7 +36,10 @@ class SumoProvider:
             except traci.exceptions.FatalTraCIError as inst:
                 print(inst)
                 break
-            print(traci.simulation.getCurrentTime(), traci.lane.getAllSubscriptionResults())
+            # print(traci.simulation.getCurrentTime(), traci.lane.getAllSubscriptionResults())
+            # print(traci.vehicle.getAllSubscriptionResults())
+            # print("Time: ", self.get_real_time(traci.simulation.getTime()), "Lane Id: ", traci.lane.getAllSubscriptionResults())
+            # print(traci.lane.getAllSubscriptionResults())
             # print(traci.vehicle.getAllSubscriptionResults())
             # update instance by subscribe result
             time.sleep(self.simulator_delay)
@@ -67,3 +70,11 @@ class SumoProvider:
         print("please select which scenario you want to run:")
         deque(map(lambda args: print("press ", args[0] + 1, " for scenario: ", args[1].name), enumerate(scenario_list)),
               maxlen=0)
+
+    def get_real_time(self, time):
+        hours = int(time)
+        hours = time / 3600
+        minutes = (hours * 60) % 60
+        seconds = (minutes * 60) % 60
+        tuple_date = (round(hours), round(minutes), round(seconds))
+        return tuple_date
