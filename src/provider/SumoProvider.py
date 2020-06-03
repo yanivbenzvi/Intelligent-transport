@@ -24,9 +24,9 @@ class SumoProvider:
 
         SumoProvider.prefer_simulation()
         # print(Configuration.sumoCmd())
-        traci.start(Configuration.sumoCmd())
 
         # create all instance
+        traci.start(Configuration.sumoCmd())
 
         # make subscribe to all instance
         # traci.lane.subscribe("152810#2_1")
@@ -41,6 +41,21 @@ class SumoProvider:
                 break
 
             print("Time: ", self.get_real_time(traci.simulation.getTime()), "Lane Id: ", traci.lane.getAllSubscriptionResults())
+
+            start_simulation = 4.1
+            finish_simulation = 14.6
+
+            simulation_hours = Scenario.get_simulation_time(self, start_simulation, finish_simulation)
+            print("get_simulation_time_in_hourse: ", simulation_hours)
+            cell_hourses = 2.0
+            num_of_cells = Scenario.get_num_of_cells(self, simulation_hours, cell_hourses)
+            print("get_num_of_cells: ", num_of_cells)
+
+            simulation_time = 13.59
+            cell_number = Scenario.get_cells_number(self, num_of_cells, simulation_time, cell_hourses)
+            print("13.59 get_cells_number: ", cell_number)
+
+
             print(traci.lane.getAllSubscriptionResults())
             print(traci.vehicle.getAllSubscriptionResults())
             # update instance by subscribe result
@@ -73,6 +88,8 @@ class SumoProvider:
         print("please select which scenario you want to run:")
         deque(map(lambda args: print("press ", args[0] + 1, " for scenario: ", args[1].name), enumerate(scenario_list)),
               maxlen=0)
+
+
 
     def get_real_time(self, time):
         hours = int(time)

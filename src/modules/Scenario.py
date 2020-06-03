@@ -1,6 +1,7 @@
 from src.utility.DownloadFile import DownloadFile
 from src.utility import Path
 from src import Configuration
+import time
 
 
 class Scenario:
@@ -43,7 +44,33 @@ class Scenario:
 
     def path_to_vehicle_xml_file(self):
         return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\"+ self.vehicle_xml_path
+               "\\" + self.vehicle_xml_path
 
     def search_for_xml(self):
         pass
+
+    def get_simulation_time(self, star, end):
+        num_of_intervals = end - star
+        if isinstance(num_of_intervals, int):
+            return num_of_intervals
+        else:
+            return int(num_of_intervals + 1)
+
+    def get_num_of_cells(self, num_of_intervals, hourse):
+        num_of_cells = num_of_intervals / hourse
+        if isinstance(num_of_cells, int):
+            return num_of_cells
+        else:
+            return int(num_of_cells + 1)
+
+    def get_cells_number(self, num_of_cells, time, cell_hourse):
+        count = 0;
+        start = cell_hourse
+        if start >= time:
+            return count
+        while start <= time:
+            start += cell_hourse
+            count += 1
+        if num_of_cells < count:
+            count = -1
+        return count
