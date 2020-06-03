@@ -1,6 +1,7 @@
-from src.utility.DownloadFile import DownloadFile
 from src.utility import Path
 from src import Configuration
+from src.utility.DownloadFile import DownloadFile
+from src.utility.Simluationinformationreader import SimulationInformationReader
 
 
 class Scenario:
@@ -18,6 +19,7 @@ class Scenario:
         self.vehicle_xml_path = vehicle_xml_path
         self.vehicle_xml_file = vehicle_xml_file
         self.traci = None
+        self.start_end_point = None
 
     def download_scenario(self):
         scenario_folder = Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder
@@ -25,7 +27,6 @@ class Scenario:
 
         if not Path.folder_exist(scenario_folder):
             print("scenario files not exist, starting download...")
-
             if DownloadFile.get_extension_from_url(self.download_url) in ["zip", ".zip", ".7z", "7z", "gz", ".gz",
                                                                           ".tar"]:
                 return DownloadFile.download_zip(self.download_url, "simulator", unpack=True)
@@ -44,10 +45,21 @@ class Scenario:
 
     def path_to_vehicle_xml_file(self):
         return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\"+ self.vehicle_xml_path
+               "\\" + self.vehicle_xml_path
 
     def search_for_xml(self):
         pass
 
+    def scenario_start_end_tuple(self):
+        if not self.start_end_point:
+            self.start_end_point = SimulationInformationReader.extract_time(self.path_to_scenario_conf())
+        return self.start_end_point
+
+    def scenario_start_time(self):
+        return self.scenario_start_end_tuple()[0]
+
+    def scenario_end_time(self):
+        return self.scenario_start_end_tuple()[1]
+
     def scenario_duration(self):
-        return self.traci.end - self.traci.strat
+        return (float(self.scenario_end_time()) - float(self.scenario_start_time())) / 3600

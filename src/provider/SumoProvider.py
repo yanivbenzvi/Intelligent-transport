@@ -1,14 +1,10 @@
 import os
 import sys
 from collections import deque
-import datetime
 import traci
 import time
 import traci.constants as tc
-
 from src import Configuration
-from src.modules.Scenario import Scenario
-import datetime
 
 
 class SumoProvider:
@@ -24,8 +20,8 @@ class SumoProvider:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
         SumoProvider.prefer_simulation()
-        traci.start(Configuration.sumoCmd())
         Configuration.scenario_object.traci = traci
+        traci.start(Configuration.sumoCmd())
         print(Configuration.scenario_object.scenario_duration())
         # create all instance
 
@@ -57,7 +53,6 @@ class SumoProvider:
 
     @staticmethod
     def select_simulation():
-
         if not Configuration.production:
             SumoProvider.print_scenario_menu(Configuration.scenario_list)
             while True:
