@@ -56,20 +56,22 @@ class Scenario:
         else:
             return int(num_of_intervals + 1)
 
-    def get_num_of_cells(self, num_of_intervals, hourse):
-        num_of_cells = num_of_intervals / hourse
+    @staticmethod
+    def get_num_of_cells(duration, interval_length):
+        num_of_cells = duration / interval_length
         if isinstance(num_of_cells, int):
             return num_of_cells
         else:
             return int(num_of_cells + 1)
 
-    def get_cells_number(self, num_of_cells, time, cell_hourse):
+    @staticmethod
+    def get_cells_number(num_of_cells, calc_time, interval_length):
         count = 0;
-        start = cell_hourse
-        if start >= time:
+        start = interval_length
+        if start >= calc_time:
             return count
-        while start <= time:
-            start += cell_hourse
+        while start <= calc_time:
+            start += interval_length
             count += 1
         if num_of_cells < count:
             count = -1
