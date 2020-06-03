@@ -17,6 +17,7 @@ class Scenario:
         self.net_xml_file = net_xml_file
         self.vehicle_xml_path = vehicle_xml_path
         self.vehicle_xml_file = vehicle_xml_file
+        self.traci = None
 
     def download_scenario(self):
         scenario_folder = Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder
@@ -47,3 +48,6 @@ class Scenario:
 
     def search_for_xml(self):
         pass
+
+    def scenario_duration(self):
+        return self.traci.end - self.traci.strat

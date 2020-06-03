@@ -1,13 +1,14 @@
 import os
 import sys
 from collections import deque
-
+import datetime
 import traci
 import time
 import traci.constants as tc
 
 from src import Configuration
 from src.modules.Scenario import Scenario
+import datetime
 
 
 class SumoProvider:
@@ -23,13 +24,13 @@ class SumoProvider:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
         SumoProvider.prefer_simulation()
-        # print(Configuration.sumoCmd())
         traci.start(Configuration.sumoCmd())
-
+        Configuration.scenario_object.traci = traci
+        print(Configuration.scenario_object.scenario_duration())
         # create all instance
 
         # make subscribe to all instance
-        # traci.lane.subscribe("152810#2_1")
+        traci.lane.subscribe("152780_1", {traci.constants.LAST_STEP_OCCUPANCY})
         # traci.vehicle.subscribe("pedestrian_1-3_2239_tr")
 
         # traci.lane.subscribeLeader(vehID="EXT", dist=0)
@@ -39,8 +40,8 @@ class SumoProvider:
             except traci.exceptions.FatalTraCIError as inst:
                 print(inst)
                 break
-            print(traci.lane.getAllSubscriptionResults())
-            print(traci.vehicle.getAllSubscriptionResults())
+            print(traci.simulation.getCurrentTime(), traci.lane.getAllSubscriptionResults())
+            # print(traci.vehicle.getAllSubscriptionResults())
             # update instance by subscribe result
             time.sleep(self.simulator_delay)
             # print(step)
