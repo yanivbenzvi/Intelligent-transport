@@ -35,17 +35,17 @@ class Scenario:
         else:
             print("scenario files exist there is no need to download.\n")
 
-    def path_to_scenario_conf(self):
+    def path_to_scenario_folder(self):
         return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\" + self.conf_path + "\\" + self.conf_file_name
+               "\\"
+    def path_to_scenario_conf(self):
+        return self.path_to_scenario_folder() + self.conf_file_name
 
     def path_to_net_xml_file(self):
-        return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\" + self.net_xml_path
+        return self.path_to_scenario_folder() + self.net_xml_path
 
     def path_to_vehicle_xml_file(self):
-        return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\" + self.vehicle_xml_path
+        return self.path_to_scenario_folder() + self.vehicle_xml_path
 
     def search_for_xml(self):
         pass
