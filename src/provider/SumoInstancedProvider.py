@@ -23,8 +23,8 @@ class SumoInstancedProvider:
             },
             'vehicle': {
                 'ctor1': Vehicle,
-                'ctor2': lambda arg: Vehicle(v_id=arg['id'], v_type=arg['type'], depart=arg['depart'],
-                                             departLane=arg['departLane'], arrivalPos=arg['arrivalPos'])
+                'ctor2': lambda arg: Vehicle(v_id=arg['id']),#, v_type=arg['type'], depart=arg['depart'],
+                                             #departLane=arg['departLane'], arrivalPos=arg['arrivalPos'])
             },
             'junction': {
                 'ctor': Junction,

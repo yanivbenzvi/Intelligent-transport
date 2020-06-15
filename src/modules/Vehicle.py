@@ -1,6 +1,6 @@
 class Vehicle:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, v_id): #, v_type, depart, departLane, arrivalPos, edges=None):
+    def __init__(self, v_id):  # , v_type, depart, departLane, arrivalPos, edges=None):
         """
         :param v_id:       Unique name - String example - "pedestrian_3-1_3451_tr"
         :param v_type:     Vehicle type - String example - "passenger"
@@ -27,3 +27,9 @@ class Vehicle:
         self.departdelay = 0.
         self.waittime = 0.
         self.rank = 0.
+
+    @classmethod
+    def from_args(cls, **kwargs) -> 'Vehicle':
+        print(kwargs)
+        return cls(v_id=kwargs['v_id'], v_type=kwargs['v_type'], depart=kwargs['depart'],
+                   departLane=kwargs['departLane'], arrivalPos=kwargs['arrivalPos'], edges=None)
