@@ -3,9 +3,10 @@ from traci._lane import _readLinks
 from traci.domain import Domain
 from traci.storage import Storage
 
+
 class Edge:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, edge_id, edge_from, edge_to, lane_id, priority=None, edge_type=None, shape=None):
+    def __init__(self, edge_id, edge_from, edge_to, lane_list, priority=None, edge_type=None, shape=None):
         """
         :param edge_id:   unique name - String example - "153459#0"
         :param edge_from: unique from edge - String example - "141010"
@@ -21,7 +22,7 @@ class Edge:
         self.priority = priority
         self.edge_type = edge_type
         self.shape = shape
-        self.lane_id = lane_id
+        self.lane_list = lane_list
 
 
 def getWaitingTime(self, edgeID):
@@ -31,11 +32,13 @@ def getWaitingTime(self, edgeID):
     """
     return self._getUniversal(tc.VAR_WAITING_TIME, edgeID)
 
+
 def getCO2Emission(self, edgeID):
     """getCO2Emission(string) -> double
     Returns the CO2 emission in mg for the last time step on the given edge.
     """
     return self._getUniversal(tc.VAR_CO2EMISSION, edgeID)
+
 
 def getCOEmission(self, edgeID):
     """getCOEmission(string) -> double
@@ -43,11 +46,13 @@ def getCOEmission(self, edgeID):
     """
     return self._getUniversal(tc.VAR_COEMISSION, edgeID)
 
+
 def getHCEmission(self, edgeID):
     """getHCEmission(string) -> double
     Returns the HC emission in mg for the last time step on the given edge.
     """
     return self._getUniversal(tc.VAR_HCEMISSION, edgeID)
+
 
 def getPMxEmission(self, edgeID):
     """getPMxEmission(string) -> double
@@ -55,11 +60,13 @@ def getPMxEmission(self, edgeID):
     """
     return self._getUniversal(tc.VAR_PMXEMISSION, edgeID)
 
+
 def getNOxEmission(self, edgeID):
     """getNOxEmission(string) -> double
     Returns the NOx emission in mg for the last time step on the given edge.
     """
     return self._getUniversal(tc.VAR_NOXEMISSION, edgeID)
+
 
 def getFuelConsumption(self, edgeID):
     """getFuelConsumption(string) -> double
@@ -67,11 +74,13 @@ def getFuelConsumption(self, edgeID):
     """
     return self._getUniversal(tc.VAR_FUELCONSUMPTION, edgeID)
 
+
 def getNoiseEmission(self, edgeID):
     """getNoiseEmission(string) -> double
     Returns the noise emission in db for the last time step on the given edge.
     """
     return self._getUniversal(tc.VAR_NOISEEMISSION, edgeID)
+
 
 def getElectricityConsumption(self, edgeID):
     """getElectricityConsumption(string) -> double
@@ -79,11 +88,13 @@ def getElectricityConsumption(self, edgeID):
     """
     return self._getUniversal(tc.VAR_ELECTRICITYCONSUMPTION, edgeID)
 
+
 def getLastStepMeanSpeed(self, edgeID):
     """getLastStepMeanSpeed(string) -> double
     Returns the average speed in m/s for the last time step on the given edge.
     """
     return self._getUniversal(tc.LAST_STEP_MEAN_SPEED, edgeID)
+
 
 def getLastStepOccupancy(self, edgeID):
     """getLastStepOccupancy(string) -> double
@@ -91,11 +102,13 @@ def getLastStepOccupancy(self, edgeID):
     """
     return self._getUniversal(tc.LAST_STEP_OCCUPANCY, edgeID)
 
+
 def getLastStepLength(self, edgeID):
     """getLastStepLength(string) -> double
     Returns the mean vehicle length in m for the last time step on the given edge.
     """
     return self._getUniversal(tc.LAST_STEP_LENGTH, edgeID)
+
 
 def getLaneNumber(self, edgeID):
     """getLaneNumber(string) -> int
@@ -103,11 +116,13 @@ def getLaneNumber(self, edgeID):
     """
     return self._getUniversal(tc.VAR_LANE_INDEX, edgeID)
 
+
 def getStreetName(self, edgeID):
     """getStreetName(string) -> string
     Returns the street name of this edge
     """
     return self._getUniversal(tc.VAR_NAME, edgeID)
+
 
 def getTraveltime(self, edgeID):
     """getTraveltime(string) -> double
@@ -115,11 +130,13 @@ def getTraveltime(self, edgeID):
     """
     return self._getUniversal(tc.VAR_CURRENT_TRAVELTIME, edgeID)
 
+
 def getLastStepVehicleNumber(self, edgeID):
     """getLastStepVehicleNumber(string) -> integer
     Returns the total number of vehicles for the last time step on the given edge.
     """
     return self._getUniversal(tc.LAST_STEP_VEHICLE_NUMBER, edgeID)
+
 
 def getLastStepHaltingNumber(self, edgeID):
     """getLastStepHaltingNumber(string) -> integer
@@ -128,11 +145,13 @@ def getLastStepHaltingNumber(self, edgeID):
     """
     return self._getUniversal(tc.LAST_STEP_VEHICLE_HALTING_NUMBER, edgeID)
 
+
 def getLastStepVehicleIDs(self, edgeID):
     """getLastStepVehicleIDs(string) -> list(string)
     Returns the ids of the vehicles for the last time step on the given edge.
     """
     return self._getUniversal(tc.LAST_STEP_VEHICLE_ID_LIST, edgeID)
+
 
 def getLastStepPersonIDs(self, edgeID):
     """getLastStepPersonIDs(string) -> list(string)

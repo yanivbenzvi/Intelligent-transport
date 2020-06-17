@@ -34,8 +34,6 @@ class SumoProvider:
         traci.lane.subscribe("152780_1")
         # traci.lane.subscribeLeader(vehID="EXT", dist=0)
 
-
-
         for step in range(self.number_of_iteration):
             try:
                 traci.simulationStep()
