@@ -40,7 +40,7 @@ class Scenario:
         return os.path.join(Configuration.project_path, Scenario.ScenarioLocation, self.dest_folder)
 
     def path_to_scenario_conf(self):
-        return os.path.join(self.path_to_scenario_folder(), self.conf_file_name)
+        return os.path.join(self.path_to_scenario_folder(), self.conf_file_name, self.conf_file_name)
 
     def path_to_net_xml_file(self):
         return os.path.join(self.path_to_scenario_folder(), self.net_xml_path, self.net_xml_file)
