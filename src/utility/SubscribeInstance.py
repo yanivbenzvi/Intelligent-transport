@@ -2,7 +2,7 @@ from src.modules.Lanes import Lane
 import traci
 
 
-class AllSubscribe:
+class SubscribeInstance:
 
     def __init__(self, traci_object: traci):
         """
@@ -11,10 +11,8 @@ class AllSubscribe:
         self.traci_object = traci_object
 
     def subscribes_all_instance(self, store):
-        for lane in store.get_all_instances_by_name('lane'):
-            print(lane)
-        exit(0)
-        self.traci_object.lane.subscribe("152174#0_1", AllSubscribe.prepare_argument("lane"))
+        for lane_id in store.get_all_instances_by_name('lane').keys():
+            self.traci_object.lane.subscribe(lane_id, SubscribeInstance.prepare_argument("lane"))
 
     @staticmethod
     def prepare_argument(instance_type):
@@ -23,4 +21,4 @@ class AllSubscribe:
 
 
 if __name__ == "__main__":
-    print(AllSubscribe.prepare_argument("lane"))
+    print(SubscribeInstance.prepare_argument("lane"))

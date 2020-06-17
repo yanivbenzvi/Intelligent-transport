@@ -47,4 +47,5 @@ def tripInfoFile():
     return full_path
 
 
-def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S", "--tripinfo-output", tripInfoFile()]
+def sumoCmd(): return [sumoBinary, "-c", sumoFolder, "-S", "--tripinfo-output", tripInfoFile(),
+                       "--xml-validation never"]

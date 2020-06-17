@@ -1,6 +1,7 @@
 from src.provider.SumoInstanceProvider import SumoInstanceProvider
+from src.utility.HandleSubscribResult import HandleSubscribeResult
 from src.utility.Store import Store
-from src.utility.AllSubscribe import AllSubscribe
+from src.utility.SubscribeInstance import SubscribeInstance
 from src import Configuration
 from collections import deque
 import traci.constants as tc
@@ -40,32 +41,21 @@ class SumoProvider:
         self.traci.start(Configuration.sumoCmd())
 
         # subscribe all relevant instance for future update
-        AllSubscribe(self.traci).subscribes_all_instance(self.store)
+        SubscribeInstance(self.traci).subscribes_all_instance(self.store)
 
         # print(Configuration.scenario_object.scenario_duration())
-        # print(Configuration.sumoCmd())
-
-        # make subscribe to all instance
-        # traci.lane.subscribe("152780_1", {traci.constants.LAST_STEP_OCCUPANCY})
-        # traci.vehicle.subscribe("pedestrian_1-3_2239_tr")
-        # traci.lane.subscribe("152780_1")
-        # traci.lane.subscribeLeader(vehID="EXT", dist=0)
 
         while self.traci.simulation.getMinExpectedNumber() > 0:
             try:
                 self.traci.simulationStep()
             except self.traci.exceptions.FatalTraCIError as inst:
                 print(inst)
-                break
-            # print(traci.simulation.getCurrentTime(), traci.lane.getAllSubscriptionResults())
-            # print(traci.vehicle.getAllSubscriptionResults())
-            # print("Time: ", self.get_real_time(traci.simulation.getTime()), "Lane Id: ", traci.lane.getAllSubscriptionResults())
-            # print(traci.lane.getAllSubscriptionResults())
-            # print(traci.vehicle.getAllSubscriptionResults())
-            # update instance by subscribe result
-            time.sleep(self.simulator_delay)
-            # print(step)
+                exit(0)
 
+            # update instance by subscribe result
+            HandleSubscribeResult.get_subscribed_result(self.traci)
+
+            time.sleep(self.simulator_delay)
         self.traci.close()
 
     @staticmethod
