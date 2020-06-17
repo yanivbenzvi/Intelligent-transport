@@ -5,10 +5,10 @@ from src.utility import Store
 class HandleSubscribeResult:
 
     @staticmethod
-    def lanes_result_handler(subscribed_result: dict, store: Store):
+    def lanes_result_handler(subscribed_result: dict, store: Store, interval_size, ):
         for lane_id in subscribed_result.keys():
             lane = store.get_object_by_id('lane', lane_id)
-            lane.update_attribute(subscribed_result[lane_id], , )
+            # lane.update_attribute(subscribed_result[lane_id], , )
 
     @staticmethod
     def get_subscribed_result(traci):

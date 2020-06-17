@@ -1,10 +1,10 @@
 from src.provider.SumoInstanceProvider import SumoInstanceProvider
 from src.utility.HandleSubscribResult import HandleSubscribeResult
+from src.utility.ScenarioTimeCalculation import ScenarioTimeCalculation
 from src.utility.Store import Store
 from src.utility.SubscribeInstance import SubscribeInstance
 from src import Configuration
 from collections import deque
-import traci.constants as tc
 import os
 import sys
 import traci
@@ -17,6 +17,7 @@ class SumoProvider:
         self.simulator_delay = 0
         self.store = None
         self.traci = traci
+        self.time_utility = None
 
     def boot(self):
         if 'SUMO_HOME' in os.environ:
@@ -40,10 +41,13 @@ class SumoProvider:
         # start the sumo simulation program
         self.traci.start(Configuration.sumoCmd())
 
+        self.time_utility = ScenarioTimeCalculation(Configuration.scenario_object)
+
         # subscribe all relevant instance for future update
         SubscribeInstance(self.traci).subscribes_all_instance(self.store)
 
-        # print(Configuration.scenario_object.scenario_duration())
+        # calculate time
+        self.initialization_scenario_time_ara()
 
         while self.traci.simulation.getMinExpectedNumber() > 0:
             try:
@@ -53,7 +57,7 @@ class SumoProvider:
                 exit(0)
 
             # update instance by subscribe result
-            HandleSubscribeResult.get_subscribed_result(self.traci)
+            # HandleSubscribeResult.get_subscribed_result(self.traci,self.time_utility.)
 
             time.sleep(self.simulator_delay)
         self.traci.close()
@@ -89,3 +93,7 @@ class SumoProvider:
         seconds = (minutes * 60) % 60
         tuple_date = (round(hours), round(minutes), round(seconds))
         return tuple_date
+
+    def initialization_scenario_time_ara(self):
+        pass
+
