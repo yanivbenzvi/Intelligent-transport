@@ -24,6 +24,15 @@ class Lane:
         self.width = width
         self.shape = shape
 
+    @staticmethod
+    def subscribe_argument():
+        return {
+            "last_step_occupancy": {
+                "hex": 0x13
+            },
+
+        }
+
 
 def getLength(self, laneID):
     """getLength(string) -> double
@@ -208,8 +217,6 @@ def getLastStepVehicleIDs(self, laneID):
     Returns the ids of the vehicles for the last time step on the given lane.
     """
     return self._getUniversal(tc.LAST_STEP_VEHICLE_ID_LIST, laneID)
-
-
 
 
 @staticmethod
