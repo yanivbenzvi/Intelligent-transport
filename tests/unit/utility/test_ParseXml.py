@@ -11,13 +11,13 @@ def before_each():
 
 
 class ParseXmlCase(unittest.TestCase):
-    def test_get_elements1(self):
+    def test_get_elements_exist(self):
         before_each()
         result = stub.get_elements("edge")
         self.assertEqual(len(result), 5)
         self.assertEqual(result[0], {'id': ':131241_0', 'function': 'internal'})
 
-    def test_get_elements2(self):
+    def test_get_elements_not_exit(self):
         before_each()
         result = stub.get_elements("bla")
         self.assertEqual(len(result), 0)

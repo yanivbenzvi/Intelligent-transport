@@ -12,16 +12,13 @@ class ParseXml:
         return self.tree is not None
 
     def open_file(self):
-        print("parsing file: ", self.file_location + self.file_name)
+        # print("parsing file: ", self.file_location + self.file_name)
         with open(self.file_location + self.file_name, 'rt') as f:
             self.tree = ElementTree.parse(f)
         return self
 
     def get_elements(self, element_name):
-        list = []
-        for neighbor in self.tree.iter(element_name):
-            list += [neighbor.attrib]
-        return list
+        return list(map(lambda neighbor: neighbor.attrib, self.tree.iter(element_name)))
 
 
 if __name__ == "__main__":

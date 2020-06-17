@@ -1,12 +1,8 @@
-import traci.constants as tc
-from traci._lane import _readLinks
-from traci.domain import Domain
-from traci.storage import Storage
-
 class Junction:
 
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, junction_id, junction_type, inc_lanes, int_lanes, x=None, y=None, z=None):
+    def __init__(self, junction_id, inc_lanes, int_lanes, request=None, junction_type='traffic_light', x=None, y=None,
+                 z=None):
         """
         :param junction_id:   unique name - String example - "131241"
         :param junction_type: type - String example - "priority"
@@ -23,6 +19,7 @@ class Junction:
         self.x = x
         self.y = y
         self.z = z
+        self.request = request
 
 def getPosition(self, junctionID):
     """getPosition(string) -> (double, double)
