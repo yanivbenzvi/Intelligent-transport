@@ -6,7 +6,6 @@ sumoBinary = "sumo" if production else "sumo-gui"
 project_folder_name = "smart-transport"
 project_path = Path.get_project_home_path()
 scenario_object = None
-# sumoFolder = "C:\\Users\\Yaniv\\Desktop\\MoSTScenario\\scenario\\most.sumocfg"
 sumoFolder = None
 
 scenario_list = [
