@@ -33,14 +33,14 @@ class SumoProvider:
         # create store of all instances
         self.store = Store(instance_provider.boot().all_instance)
 
-        # subscribe all relevant instance for future update
-        AllSubscribe(self.traci).subscribes_all_instance()
-
         # make traci to be global
         Configuration.scenario_object.traci = self.traci
 
         # start the sumo simulation program
         self.traci.start(Configuration.sumoCmd())
+
+        # subscribe all relevant instance for future update
+        AllSubscribe(self.traci).subscribes_all_instance(self.store)
 
         # print(Configuration.scenario_object.scenario_duration())
         # print(Configuration.sumoCmd())
