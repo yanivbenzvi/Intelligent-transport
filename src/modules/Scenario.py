@@ -2,6 +2,7 @@ from src.utility import Path
 from src import Configuration
 from src.utility.DownloadFile import DownloadFile
 from src.utility.Simluationinformationreader import SimulationInformationReader
+import os
 
 
 class Scenario:
@@ -36,16 +37,16 @@ class Scenario:
             print("scenario files exist there is no need to download.\n")
 
     def path_to_scenario_folder(self):
-        return Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder + \
-               "\\"
+        return os.path.join(Configuration.project_path, Scenario.ScenarioLocation, self.dest_folder)
+
     def path_to_scenario_conf(self):
-        return self.path_to_scenario_folder() + self.conf_file_name
+        return os.path.join(self.path_to_scenario_folder(), self.conf_file_name)
 
     def path_to_net_xml_file(self):
-        return self.path_to_scenario_folder() + self.net_xml_path
+        return os.path.join(self.path_to_scenario_folder(), self.net_xml_path, self.net_xml_file)
 
     def path_to_vehicle_xml_file(self):
-        return self.path_to_scenario_folder() + self.vehicle_xml_path
+        return os.path.join(self.path_to_scenario_folder(), self.vehicle_xml_path, self.vehicle_xml_file)
 
     def search_for_xml(self):
         pass

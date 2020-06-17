@@ -1,10 +1,11 @@
+from src.provider.SumoInstanceProvider import SumoInstanceProvider
+from src import Configuration
+from collections import deque
+import traci.constants as tc
 import os
 import sys
-from collections import deque
 import traci
 import time
-import traci.constants as tc
-from src import Configuration
 
 
 class SumoProvider:
@@ -20,6 +21,8 @@ class SumoProvider:
             sys.exit("please declare environment variable 'SUMO_HOME'")
 
         SumoProvider.prefer_simulation()
+        Instance_provider = SumoInstanceProvider(Configuration.scenario_object)
+        Instance_provider.boot()
         Configuration.scenario_object.traci = traci
         traci.start(Configuration.sumoCmd())
         print(Configuration.scenario_object.scenario_duration())
@@ -30,6 +33,9 @@ class SumoProvider:
         # traci.vehicle.subscribe("pedestrian_1-3_2239_tr")
         traci.lane.subscribe("152780_1")
         # traci.lane.subscribeLeader(vehID="EXT", dist=0)
+
+
+
         for step in range(self.number_of_iteration):
             try:
                 traci.simulationStep()

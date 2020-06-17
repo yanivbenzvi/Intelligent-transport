@@ -1,11 +1,12 @@
 class Edge:
     # from \\scenario\\in\\most.net.xml
-    def __init__(self, edge_id, edge_from=None, edge_to=None, lane_id=None, priority=None, edge_type=None, shape=None):
+    def __init__(self, edge_id, edge_from=None, edge_to=None, lane_list=None, priority=None, edge_type=None,
+                 shape=None):
         """
         :param edge_id:   unique name - String example - "153459#0"
         :param edge_from: unique from edge - String example - "141010"
         :param edge_to:   unique to edge - String example - "141010"
-        :param lane_id:   unique name lane id - String example - "153459#0_0"
+        :param lane_list: lane list - list of lane objects
         :param priority:  priority - String example - "9", default = None
         :param edge_type: road type - String example - "highway.primary", default = None
         :param shape:     edge shape - String, default = None
@@ -16,4 +17,4 @@ class Edge:
         self.priority = priority
         self.edge_type = edge_type
         self.shape = shape
-        self.lane_id = lane_id
+        self.lane_list = lane_list
