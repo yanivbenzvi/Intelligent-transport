@@ -2,9 +2,11 @@ from src.utility.Simluationinformationreader import SimulationInformationReader
 
 
 class ScenarioTimeCalculation:
-    def __init__(self, scenario):
+    def __init__(self, scenario, interval_length):
         self.scenario = scenario
+        self.start_end_point = None
         self.start_end_point = self.scenario_start_end_tuple()
+        self.interval_length = interval_length
 
     def scenario_start_end_tuple(self):
         if not self.start_end_point:
@@ -20,35 +22,33 @@ class ScenarioTimeCalculation:
     def scenario_duration(self):
         return (float(self.scenario_end_time()) - float(self.scenario_start_time())) / 3600
 
-    @staticmethod
-    def get_num_of_interval(duration, interval_length):
+    def get_num_of_interval(self):
         """
         :param duration: simulation duration (finish time - start time)
         :param interval_length: 2 hours per one cell
         :return: num of the interval in scenario simulation
         """
-        num_of_cells = duration / interval_length
+        num_of_cells = self.scenario_duration() / self.interval_length
         if num_of_cells.is_integer():
             return int(num_of_cells)
         else:
             return int(num_of_cells + 1)
 
-    @staticmethod
-    def get_cells_number(num_of_cells, calc_time, interval_length):
+    def get_current_interval(self, current_time):
         """
         :param num_of_cells:num of total cells
-        :param calc_time: specific time
+        :param current_time: specific time
         :param interval_length: interval length (2)
         :return: cell location to specific time (calc_time)
         """
         count = 0
-        start = interval_length
-        if start >= calc_time:
+        start = self.interval_length
+        if start >= current_time:
             return count
-        while start <= calc_time:
-            start += interval_length
+        while start <= current_time:
+            start += self.interval_length
             count += 1
-        if num_of_cells < count:
+        if self.get_num_of_interval() < count:
             count = -1
         return count
 
@@ -80,19 +80,23 @@ class ScenarioTimeCalculation:
 
 
 if __name__ == "__main__":
-    print("Check if next interval cell: ->1. no 2. yes")
+    print("Check if next interval cell: --> 1. no 2. yes")
     printed1 = ScenarioTimeCalculation.check_is_next_interval_cell(2, 0.5, 0.5)
     printed2 = ScenarioTimeCalculation.check_is_next_interval_cell(2, 1.8, 0.5)
-    print("1.-> Empty-> ", printed1)
-    print("2.-> Update to next phase -> ", printed2)
+    print("1.-> Empty--> ", printed1)
+    print("2.-> Update to next phase --> ", printed2)
     print("-----------------------------------------------------")
-    print("get_real_time-> 4:00:00 (4,0,0) ")
+    print("get_real_time-> 14400 = 04:00:00 --> (4,0,0) ")
     print(ScenarioTimeCalculation.get_real_time(14400))
+    print("get_real_time-> 19900 = 06:32:40 --> (6,32,40) ")
+    print(ScenarioTimeCalculation.get_real_time(19900)[0])
+    print(ScenarioTimeCalculation.get_real_time(19900)[1])
+    print(ScenarioTimeCalculation.get_real_time(19900)[2])
     print("-----------------------------------------------------")
-    print("get_num_of_cells: TimeFunction.get_num_of_cells(14, 2)-> 7")
+    print("Real Time 19000 --> 5 ", ScenarioTimeCalculation.get_real_time(time=19000)[0])
+    print("get_num_of_cells: TimeFunction.get_num_of_cells(14, 2)--> 7")
     print(ScenarioTimeCalculation.get_num_of_interval(14, 2))
-    print("TimeFunction.get_num_of_cells(11, 2)-> 6")
+    print("TimeFunction.get_num_of_cells(11, 2) --> 6")
     print(ScenarioTimeCalculation.get_num_of_interval(11, 2))
     print("-----------------------------------------------------")
-    print("TimeFunction.get_cells_number(6, 4, 2)-> 2")
-    print(ScenarioTimeCalculation.get_cells_number(6, 4, 2))
+    print("TimeFunction.get_cells_number(6, 4, 2) --> 2")
