@@ -17,6 +17,11 @@ def save2json(doc, file_name, path="../../tests/resources/"):
         file.write(j)
 
 
+def load_json(file_name, path="tests/resources/"):
+    with open(path + file_name, 'r') as json_file:
+        return json.load(json_file)
+
+
 if __name__ == "__main__":
     import os
 

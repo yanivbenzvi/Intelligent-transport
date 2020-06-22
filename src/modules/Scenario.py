@@ -1,7 +1,7 @@
 from src.utility import Path
 from src import Configuration
 from src.utility.DownloadFile import DownloadFile
-from src.utility.Simluationinformationreader import SimulationInformationReader
+from src.utility.SimulationInformationReader import SimulationInformationReader
 import os
 
 

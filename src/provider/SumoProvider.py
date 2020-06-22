@@ -1,6 +1,8 @@
 from src.provider.SumoInstanceProvider import SumoInstanceProvider
+from src.utility.HandleSimulationInterval import HandleSimulationInterval
 from src.utility.HandleSubscribResult import HandleSubscribeResult
 from src.utility.ScenarioTimeCalculation import ScenarioTimeCalculation
+from src.utility.CollectDataAlgorithm import CollectDataAlgorithm
 from src.utility.Store import Store
 from src.utility.SubscribeInstance import SubscribeInstance
 from src import Configuration
@@ -8,6 +10,7 @@ from collections import deque
 import os
 import sys
 import traci
+from traci._trafficlight import Phase, Logic
 import time
 
 
@@ -44,12 +47,15 @@ class SumoProvider:
         self.time_utility = ScenarioTimeCalculation(Configuration.scenario_object, interval_length=2)
 
         # subscribe all relevant instance for future update
-        SubscribeInstance(self.traci).subscribes_all_instance(self.store)
-
-        # calculate time
-        self.initialization_scenario_time_arg()
+        if not Configuration.algorithm_mode:
+            SubscribeInstance(self.traci).subscribes_all_instance(self.store)
+        # load relevant data for algorithm future running
+        else:
+            CollectDataAlgorithm.load_lane_occupancy_data(self.store)
+            CollectDataAlgorithm.update_weights_of_junction(self.store)
 
         # for step in range(self.number_of_iteration):
+        flag_change = False
         while self.traci.simulation.getMinExpectedNumber() > 0:
             try:
                 self.traci.simulationStep()
@@ -59,12 +65,32 @@ class SumoProvider:
 
             # update instance by subscribe result
             current_time = self.traci.simulation.getTime()
-            HandleSubscribeResult.get_subscribed_result(self.traci, self.store, self.time_utility.get_num_of_interval(),
-                                                        self.time_utility.get_current_interval(current_time))
-
+            if not Configuration.algorithm_mode:
+                HandleSubscribeResult.get_subscribed_result(self.traci, self.store,
+                                                            self.time_utility.get_num_of_interval(),
+                                                            self.time_utility.get_current_interval(current_time))
+            else:
+                HandleSimulationInterval.checkIntervalPhase(self.traci, self.store, self.time_utility, current_time)
+                # if not flag_change:
+                #     print(traci.trafficlight.setProgramLogic("143517",
+                #                                              Logic(programID='0', type=3, currentPhaseIndex=0, phases=(
+                #                                                  Phase(duration=37.0, state='gGGrrrG', minDur=5.0,
+                #                                                        maxDur=30.0, next=()),
+                #                                                  Phase(duration=1, state='gGGrrrr', minDur=1, maxDur=1,
+                #                                                        next=()),
+                #                                                  Phase(duration=1, state='yyyrrrr', minDur=1, maxDur=1,
+                #                                                        next=()),
+                #                                                  Phase(duration=1, state='rrrgGGr', minDur=1, maxDur=1,
+                #                                                        next=()),
+                #                                                  Phase(duration=1, state='rrrgrrr', minDur=1, maxDur=1,
+                #                                                        next=()),
+                #                                                  Phase(duration=1, state='rrryrrr', minDur=1, maxDur=1,
+                #                                                        next=())), subParameter={})))
+                #     flag_change = True
             time.sleep(self.simulator_delay)
 
-        HandleSubscribeResult.handleResults(self.store)
+        if not Configuration.algorithm_mode:
+            HandleSubscribeResult.handleResults(self.store)
         self.traci.close()
 
     @staticmethod
@@ -90,14 +116,3 @@ class SumoProvider:
         print("please select which scenario you want to run:")
         deque(map(lambda args: print("press ", args[0] + 1, " for scenario: ", args[1].name), enumerate(scenario_list)),
               maxlen=0)
-
-    def get_real_time(self, time):
-        hours = int(time)
-        hours = time / 3600
-        minutes = (hours * 60) % 60
-        seconds = (minutes * 60) % 60
-        tuple_date = (round(hours), round(minutes), round(seconds))
-        return tuple_date
-
-    def initialization_scenario_time_arg(self):
-        pass

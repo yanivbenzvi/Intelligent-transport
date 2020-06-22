@@ -1,4 +1,5 @@
 from src.utility.Store import Store
+from src.utility.XmlToDict import load_json
 
 
 class CollectDataAlgorithm:
@@ -24,6 +25,17 @@ class CollectDataAlgorithm:
         for edge in related_edge:
             edge.relatively_junction_priority = int(edge.priority) / total_priority
             print("edge_id: ", edge.edge_id, "relatively_junction_priority", edge.relatively_junction_priority)
+
+    @staticmethod
+    def load_lane_occupancy_data(store: Store):
+        occupancy_data = load_json("lanes_results.json")
+        lanes_store = store.get_all_instances_by_name('lane')
+        lanes_store_keys = store.get_all_instances_by_name('lane').keys()
+
+        for lane_id in occupancy_data.keys():
+            if lane_id in lanes_store_keys:
+                lanes_store[lane_id].occupancy = occupancy_data[lane_id]
+
 
 
 if __name__ == "__main__":

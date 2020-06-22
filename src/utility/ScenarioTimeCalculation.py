@@ -1,4 +1,4 @@
-from src.utility.Simluationinformationreader import SimulationInformationReader
+from src.utility.SimulationInformationReader import SimulationInformationReader
 
 
 class ScenarioTimeCalculation:
@@ -80,6 +80,22 @@ class ScenarioTimeCalculation:
         if next_interval_step - current_time <= delta:
             outPut = "Update to next phase"
         return outPut
+
+    def get_next_interval(self, current_interval):
+        if self.get_num_of_interval() == current_interval:
+            return -1
+        return current_interval + 1
+
+    def is_the_next_interval_near(self, current_time, delta):
+        current_interval = self.get_current_interval(current_time)
+        next_interval = self.get_next_interval(current_interval)
+        delta_interval = self.get_current_interval(current_time + delta)
+
+        return delta_interval >= next_interval
+
+
+
+
 
 
 if __name__ == "__main__":

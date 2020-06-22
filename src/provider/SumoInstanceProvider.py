@@ -14,7 +14,7 @@ class SumoInstanceProvider:
 
     def boot(self):
         print("starting building simulator instance store")
-        if not isinstance(self.scenario,Scenario):
+        if not isinstance(self.scenario, Scenario):
             print("SumoInstancedProvider: There is no scenario obeject")
             exit(1)
         self.create_and_filter_all_instance()
@@ -118,7 +118,8 @@ class SumoInstanceProvider:
             lanes_filtered = list(filter(lambda lane: filter_lane_lam(lane), edge_dict['lane']))
         lane_object = list(map(lambda lane: Lane(lane['@id'], index=lane['@index'], length=lane['@length']
                                                  , speed=lane['@speed'],
-                                                 allow=None if '@allow' not in lane else lane['@allow']), lanes_filtered))
+                                                 allow=None if '@allow' not in lane else lane['@allow']),
+                               lanes_filtered))
 
         edge_object = Edge(edge_dict['@id'], edge_from=edge_dict['@from'], edge_to=edge_dict['@to'],
                            priority=None if '@priority' not in edge_dict else edge_dict['@priority'],
