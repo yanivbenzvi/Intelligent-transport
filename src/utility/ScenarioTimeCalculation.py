@@ -43,13 +43,12 @@ class ScenarioTimeCalculation:
         """
         current_time = ScenarioTimeCalculation.get_real_time(current_time)[0]
         count = 0
-        # start = self.interval_length
-        start = ScenarioTimeCalculation.get_real_time(self.start_end_point[0])[0]
-        # if start >= current_time:
-        #     return count
-        while start < current_time:
-            start += self.interval_length
+        current_bound = ScenarioTimeCalculation.get_real_time(self.start_end_point[0])[0] + self.interval_length
+
+        while current_time >= current_bound:
+            current_bound += self.interval_length
             count += 1
+
         if self.get_num_of_interval() < count:
             count = -1
         print("current_interval: ", count)
@@ -65,7 +64,8 @@ class ScenarioTimeCalculation:
         hours = time / 3600
         minutes = (hours * 60) % 60
         seconds = (minutes * 60) % 60
-        tuple_date = (round(hours), round(minutes), round(seconds))
+        tuple_date = (int(hours), int(minutes), int(seconds))
+        # tuple_date = (round(hours), round(minutes), round(seconds))
         return tuple_date
 
     @staticmethod
