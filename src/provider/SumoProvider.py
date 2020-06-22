@@ -57,9 +57,13 @@ class SumoProvider:
                 exit(0)
 
             # update instance by subscribe result
-            HandleSubscribeResult.get_subscribed_result(self.traci, self.time_utility.get_num_of_interval(), self.time_utility.get_current_interval(sel))
+            current_time = self.traci.simulation.getTime()
+            HandleSubscribeResult.get_subscribed_result(self.traci, self.store, self.time_utility.get_num_of_interval(),
+                                                        self.time_utility.get_current_interval(current_time))
 
             time.sleep(self.simulator_delay)
+
+
         self.traci.close()
 
     @staticmethod
@@ -96,4 +100,3 @@ class SumoProvider:
 
     def initialization_scenario_time_arg(self):
         pass
-
