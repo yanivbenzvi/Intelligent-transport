@@ -29,7 +29,7 @@ class SumoProvider:
         # set simulator choice from the list of the scenario
         SumoProvider.prefer_simulation()
 
-        # import all nessacceary object from the simulator
+        # import all necessary object from the simulator
         instance_provider = SumoInstanceProvider(Configuration.scenario_object)
 
         # create store of all instances
@@ -55,7 +55,7 @@ class SumoProvider:
                 self.traci.simulationStep()
             except self.traci.exceptions.FatalTraCIError as inst:
                 print(inst)
-                exit(0)
+                break
 
             # update instance by subscribe result
             current_time = self.traci.simulation.getTime()
