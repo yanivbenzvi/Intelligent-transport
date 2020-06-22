@@ -1,5 +1,5 @@
-from src.modules.Lanes import Lane
 from src.utility import Store
+from src.utility.XmlToDict import save2json
 
 
 class HandleSubscribeResult:
@@ -15,6 +15,14 @@ class HandleSubscribeResult:
     def get_subscribed_result(traci, store, num_of_interval, current_interval):
         HandleSubscribeResult.lanes_result_handler(traci.lane.getAllSubscriptionResults(), store, num_of_interval,
                                                    current_interval)
-        # print(traci.simulation.getCurrentTime(), traci.lane.getAllSubscriptionResults())
-        # print(traci.vehicle.getAllSubscriptionResults())
-        # print("Time: ", self.get_real_time(traci.simulation.getTime()), "Lane Id: ", traci.lane.getAllSubscriptionResults())
+
+    @staticmethod
+    def handleResults(store: Store):
+        lanes = store.get_all_instances_by_name('lane')
+        saving_result = dict()
+        for lane_id in lanes.keys():
+            lane_s = {
+                lane_id: lanes[lane_id].occupancy
+            }
+            saving_result = {**saving_result, **lane_s}
+        save2json(saving_result, "lanes_results", path="logs/")

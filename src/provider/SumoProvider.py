@@ -49,6 +49,7 @@ class SumoProvider:
         # calculate time
         self.initialization_scenario_time_arg()
 
+        # for step in range(self.number_of_iteration):
         while self.traci.simulation.getMinExpectedNumber() > 0:
             try:
                 self.traci.simulationStep()
@@ -63,7 +64,7 @@ class SumoProvider:
 
             time.sleep(self.simulator_delay)
 
-
+        HandleSubscribeResult.handleResults(self.store)
         self.traci.close()
 
     @staticmethod

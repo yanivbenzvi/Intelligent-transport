@@ -10,10 +10,10 @@ def xml2dict(path):
     return doc
 
 
-def save2json(doc, file_name):
+def save2json(doc, file_name, path="../../tests/resources/"):
     pp = pprint.PrettyPrinter(indent=4)
     j = json.dumps(doc, indent=4, sort_keys=True)
-    with open("../../tests/resources/" + file_name + ".json", 'w') as file:
+    with open(path + file_name + ".json", 'w') as file:
         file.write(j)
 
 
