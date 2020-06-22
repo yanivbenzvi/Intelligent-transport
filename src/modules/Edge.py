@@ -15,6 +15,7 @@ class Edge:
         self.edge_from = edge_from
         self.edge_to = edge_to
         self.priority = priority
+        self.relatively_junction_priority = None
         self.edge_type = edge_type
         self.shape = shape
         self.lane_list = lane_list

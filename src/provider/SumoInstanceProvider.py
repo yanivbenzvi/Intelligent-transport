@@ -99,7 +99,7 @@ class SumoInstanceProvider:
 
     @staticmethod
     def edges_filter_non_traffic_light(edges, junctions_id_list):
-        edges_filtered = list(filter(lambda edge: '@from' in edge and edge['@from'] in junctions_id_list, edges))
+        edges_filtered = list(filter(lambda edge: ('@to' in edge and edge['@to'] in junctions_id_list), edges))
         edges_filtered = {edges['@id']: SumoInstanceProvider.create_edge_object(edges) for edges in
                           edges_filtered}
         return edges_filtered
@@ -107,7 +107,7 @@ class SumoInstanceProvider:
     @staticmethod
     def create_edge_object(edge_dict):
         def filter_lane_lam(lane):
-            if ('@allow' in lane) and ('pedestrian' not in lane['@allow'].split(' ')):
+            if ('@allow' in lane) and ('pedestrian' in lane['@allow'].split(' ')):
                 return False
             return True
 
@@ -116,9 +116,11 @@ class SumoInstanceProvider:
         else:
             lanes_filtered = list(filter(lambda lane: filter_lane_lam(lane), edge_dict['lane']))
         lane_object = list(map(lambda lane: Lane(lane['@id'], index=lane['@index'], length=lane['@length']
-                                                 , speed=lane['@speed']), lanes_filtered))
+                                                 , speed=lane['@speed'],
+                                                 allow=None if '@allow' not in lane else lane['@allow']), lanes_filtered))
 
         edge_object = Edge(edge_dict['@id'], edge_from=edge_dict['@from'], edge_to=edge_dict['@to'],
+                           priority=None if '@priority' not in edge_dict else edge_dict['@priority'],
                            edge_type=edge_dict['@type'], lane_list=lane_object)
         return edge_object
 

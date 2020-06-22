@@ -50,3 +50,24 @@ if __name__ == "__main__":
 
     calc_time = datetime.datetime.now() - start_time
     print("--- %s microseconds ---" % calc_time.microseconds)
+
+    print("#####################################################")
+    junction = store.get_object_by_id(instance_name='junction', instance_id='143517')
+    edges = store.get_all_instances_by_name('edge')
+    related_edge = []
+
+    for edge_id in edges.keys():
+        if edges[edge_id].edge_to == junction.junction_id:
+            pedestrian_flag = True
+            if len(edges[edge_id].lane_list) > 0:
+                related_edge.append(edges[edge_id])
+
+    total_priority = 0
+    print(related_edge)
+    for edge in related_edge:
+        total_priority += int(edge.priority)
+
+    for edge in related_edge:
+        edge.relatively_junction_priority = int(edge.priority) / total_priority
+        print("edge_id: ", edge.edge_id, "relatively_junction_priority", edge.relatively_junction_priority)
+
