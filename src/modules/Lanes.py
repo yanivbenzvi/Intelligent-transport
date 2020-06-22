@@ -18,5 +18,31 @@ class Lane:
         self.length = length
         self.width = width
         self.shape = shape
+        self.occupancy = None
 
+    @staticmethod
+    def subscribe_argument():
+        return {
+            "last_step_occupancy": {
+                "hex": 0x13
+            },
+        }
 
+    def update_attribute(self, subscribed_result, interval_size, current_interval):
+        if not self.occupancy:
+            self.occupancy = [0] * interval_size
+
+        argument_to_update = Lane.subscribe_argument()["last_step_occupancy"]['hex']
+        if subscribed_result[argument_to_update] > 0.0:
+            try:
+                print('Updating lane id:', self.lane_id, 'subscribed_result: ', 'current occupancy: ',
+                      self.occupancy[current_interval])
+                self.occupancy[current_interval] = (self.occupancy[current_interval] +
+                                                    subscribed_result[argument_to_update]) / 2
+                print('subscribe occupancy: ', subscribed_result[argument_to_update], 'current_interval',
+                      current_interval, 'new occupancy: ', self.occupancy[current_interval], "\n\n")
+
+            except KeyError as e:
+                print('I got a KeyError - reason "%s"' % str(e))
+                print('subscribed_result ', subscribed_result)
+                exit(0)

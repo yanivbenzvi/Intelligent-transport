@@ -20,3 +20,9 @@ class Junction:
         self.y = y
         self.z = z
         self.request = request
+
+def getPosition(self, junctionID):
+    """getPosition(string) -> (double, double)
+    Returns the coordinates of the center of the junction.
+    """
+    return self._getUniversal(tc.VAR_POSITION, junctionID)

@@ -18,6 +18,7 @@ class SumoInstanceProvider:
             print("SumoInstancedProvider: There is no scenario obeject")
             exit(1)
         self.create_and_filter_all_instance()
+        return self
 
     @staticmethod
     def instance_list():

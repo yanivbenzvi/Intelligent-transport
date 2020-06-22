@@ -20,7 +20,6 @@ class Scenario:
         self.vehicle_xml_path = vehicle_xml_path
         self.vehicle_xml_file = vehicle_xml_file
         self.traci = None
-        self.start_end_point = None
 
     def download_scenario(self):
         scenario_folder = Configuration.project_path + "\\" + Scenario.ScenarioLocation + "\\" + self.dest_folder
@@ -47,41 +46,3 @@ class Scenario:
 
     def path_to_vehicle_xml_file(self):
         return os.path.join(self.path_to_scenario_folder(), self.vehicle_xml_path, self.vehicle_xml_file)
-
-    def search_for_xml(self):
-        pass
-
-    def scenario_start_end_tuple(self):
-        if not self.start_end_point:
-            self.start_end_point = SimulationInformationReader.extract_time(self.path_to_scenario_conf())
-        return self.start_end_point
-
-    def scenario_start_time(self):
-        return self.scenario_start_end_tuple()[0]
-
-    def scenario_end_time(self):
-        return self.scenario_start_end_tuple()[1]
-
-    def scenario_duration(self):
-        return (float(self.scenario_end_time()) - float(self.scenario_start_time())) / 3600
-
-    @staticmethod
-    def get_num_of_cells(duration, interval_length):
-        num_of_cells = duration / interval_length
-        if isinstance(num_of_cells, int):
-            return num_of_cells
-        else:
-            return int(num_of_cells + 1)
-
-    @staticmethod
-    def get_cells_number(num_of_cells, calc_time, interval_length):
-        count = 0;
-        start = interval_length
-        if start >= calc_time:
-            return count
-        while start <= calc_time:
-            start += interval_length
-            count += 1
-        if num_of_cells < count:
-            count = -1
-        return count
