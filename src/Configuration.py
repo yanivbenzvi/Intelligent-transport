@@ -2,7 +2,7 @@ from src.utility import Path
 from src.modules.Scenario import Scenario
 
 production = False
-algorithm_mode = True
+algorithm_mode = False
 sumoBinary = "sumo" if production else "sumo-gui"
 project_folder_name = "smart-transport"
 project_path = Path.get_project_home_path()
@@ -32,7 +32,13 @@ scenario_list = [
              dest_folder="TAPASCologne-0.32.0", conf_path="", conf_file_name="cologne.sumocfg",
              net_xml_path="",
              vehicle_xml_path="", net_xml_file="",
-             vehicle_xml_file="")
+             vehicle_xml_file=""),
+    Scenario(name="Bologna Ringway 1.0",
+             download_url="http://academic.lucabedogni.it/wp-content/uploads/2019/11/bolognaringway_1.0.tar.gz",
+             dest_folder="bolognaringway_1", conf_path="", conf_file_name="bolognaringway.sumo.cfg",
+             net_xml_path="",
+             vehicle_xml_path="", net_xml_file="bolognaringway.net.xml",
+             vehicle_xml_file="bolognaringway.rou.xml")
 ]
 
 

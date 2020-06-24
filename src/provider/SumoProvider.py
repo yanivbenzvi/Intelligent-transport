@@ -10,7 +10,6 @@ from collections import deque
 import os
 import sys
 import traci
-from traci._trafficlight import Phase, Logic
 import time
 
 
@@ -45,7 +44,7 @@ class SumoProvider:
         self.traci.start(Configuration.sumoCmd())
 
         self.time_utility = ScenarioTimeCalculation(Configuration.scenario_object, interval_length=2)
-
+        print("duration of selected simulation: ", self.time_utility.scenario_duration())
         # subscribe all relevant instance for future update
         if not Configuration.algorithm_mode:
             SubscribeInstance(self.traci).subscribes_all_instance(self.store)
@@ -71,23 +70,9 @@ class SumoProvider:
                                                             self.time_utility.get_current_interval(current_time))
             else:
                 HandleSimulationInterval.checkIntervalPhase(self.traci, self.store, self.time_utility, current_time)
-                # if not flag_change:
-                #     print(traci.trafficlight.setProgramLogic("143517",
-                #                                              Logic(programID='0', type=3, currentPhaseIndex=0, phases=(
-                #                                                  Phase(duration=37.0, state='gGGrrrG', minDur=5.0,
-                #                                                        maxDur=30.0, next=()),
-                #                                                  Phase(duration=1, state='gGGrrrr', minDur=1, maxDur=1,
-                #                                                        next=()),
-                #                                                  Phase(duration=1, state='yyyrrrr', minDur=1, maxDur=1,
-                #                                                        next=()),
-                #                                                  Phase(duration=1, state='rrrgGGr', minDur=1, maxDur=1,
-                #                                                        next=()),
-                #                                                  Phase(duration=1, state='rrrgrrr', minDur=1, maxDur=1,
-                #                                                        next=()),
-                #                                                  Phase(duration=1, state='rrryrrr', minDur=1, maxDur=1,
-                #                                                        next=())), subParameter={})))
-                #     flag_change = True
-            time.sleep(self.simulator_delay)
+
+            if self.simulator_delay > 0:
+                time.sleep(self.simulator_delay)
 
         if not Configuration.algorithm_mode:
             HandleSubscribeResult.handleResults(self.store)

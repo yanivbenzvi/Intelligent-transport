@@ -26,6 +26,6 @@ if __name__ == "__main__":
     parser = make_parser()
     allvehicles = []
     parser.setContentHandler(VehInformationReader(allvehicles))
-    parser.parse(project_path + "/tests/resources/most.tripinfo.trips.xml")
+    parser.parse(project_path + "/tests/resources/most.monacor_scenario_ver_06_date-24-06-2020_08-36-35_tripinfo.trips.xml")
 
     getBasicStats(True, None, allvehicles)
