@@ -135,9 +135,9 @@ class SumoInstanceProvider:
     def create_and_filter_all_instance(self):
         self.all_instance = self.create_instance_from_xml()
 
-        # print("before filtering")
-        # for ins in self.all_instance.keys():
-        #     print(ins, " length: ", len(self.all_instance[ins]))
+        print("before filtering:\n")
+        for ins in self.all_instance.keys():
+            print(ins, " length: ", len(self.all_instance[ins]))
 
         self.all_instance['junction'] = SumoInstanceProvider.junction_filter_non_traffic_light(self.all_instance)
         all_inc_lanes = SumoInstanceProvider.get_all_inc_lanes(self.all_instance['junction'])
@@ -149,7 +149,7 @@ class SumoInstanceProvider:
 
         self.all_instance['connection'] = SumoInstanceProvider.connection_filter(self.all_instance)
 
-        # print("after filtering")
+        print("\n\nafter filtering:\n")
         for ins in self.all_instance.keys():
             print(ins, "size: ", len(self.all_instance[ins]))
 
