@@ -11,6 +11,7 @@ import os
 import sys
 import traci
 import time
+from art import tprint
 
 
 class SumoProvider:
@@ -98,6 +99,7 @@ class SumoProvider:
 
     @staticmethod
     def print_scenario_menu(scenario_list):
+        tprint("Intelligent Transport")
         print("please select which scenario you want to run:")
         deque(map(lambda args: print("press ", args[0] + 1, " for scenario: ", args[1].name), enumerate(scenario_list)),
               maxlen=0)

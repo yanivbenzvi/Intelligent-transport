@@ -1,8 +1,8 @@
+import time
+import os
 from src.utility import Path
 from src import Configuration
 from src.utility.DownloadFile import DownloadFile
-from src.utility.SimulationInformationReader import SimulationInformationReader
-import os
 
 
 class Scenario:
@@ -27,6 +27,7 @@ class Scenario:
 
         if not Path.folder_exist(scenario_folder):
             print("scenario files not exist, starting download...")
+            time.sleep(2)
             if DownloadFile.get_extension_from_url(self.download_url) in ["zip", ".zip", ".7z", "7z", "gz", ".gz",
                                                                           ".tar"]:
                 return DownloadFile.download_zip(self.download_url, "simulator", unpack=True)
